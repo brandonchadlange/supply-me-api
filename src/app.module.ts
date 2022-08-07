@@ -2,8 +2,11 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
+import CONFIG_MODULE from './config/dotenv';
+import DB_MODULE from './config/typeorm';
+
 @Module({
-  imports: [],
+  imports: [CONFIG_MODULE, DB_MODULE],
   controllers: [AppController],
   providers: [AppService],
 })
