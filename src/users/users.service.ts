@@ -17,4 +17,15 @@ export class UsersService {
       },
     });
   }
+
+  async create(request: Omit<User, 'id'>) {
+    const newUser = this.usersRepository.create({
+      emailAddress: request.emailAddress,
+      passwordHash: request.passwordHash,
+    });
+
+    await this.usersRepository.save(newUser);
+
+    return newUser;
+  }
 }
