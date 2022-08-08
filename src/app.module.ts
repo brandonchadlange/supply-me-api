@@ -5,12 +5,13 @@ import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { HashModule } from './hash/hash.module';
 import { SuppliersModule } from './suppliers/suppliers.module';
+import { ProjectsModule } from './projects/projects.module';
 
 import CONFIG_MODULE from './config/dotenv';
 import DB_MODULE from './config/typeorm';
 
 @Module({
-  imports: [CONFIG_MODULE, DB_MODULE, UsersModule, AuthModule, HashModule, SuppliersModule],
+  imports: [CONFIG_MODULE, DB_MODULE, UsersModule, AuthModule, HashModule, SuppliersModule, ProjectsModule],
   controllers: [AppController],
   providers: [AppService],
 })

@@ -1,14 +1,14 @@
 import { User } from 'src/users/entities/user.entity';
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
-import { ProjectSupplier } from './project-supplier.entity';
+import { Project } from './project.entity';
 
 @Entity()
-export class ProjectSupplierUser {
+export class ProjectUser {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne((type) => ProjectSupplier, (supplier) => supplier.id)
-  supplier: ProjectSupplier;
+  @ManyToOne((type) => Project, (project) => project.id)
+  project: Project;
 
   @ManyToOne((type) => User, (user) => user.id)
   user: User;
