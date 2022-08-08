@@ -7,7 +7,6 @@ import repositories from 'src/repositories';
     repositories.SUPPLIER_PRODUCT,
     repositories.PROJECT_SUPPLIER,
     repositories.PROJECT_SUPPLIER_PRODUCT,
-    repositories.PROJECT_SUPPLIER_USER,
   ],
 })
 export class SuppliersModule {}
