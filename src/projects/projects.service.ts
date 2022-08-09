@@ -45,4 +45,10 @@ export class ProjectsService {
 
     return project;
   }
+
+  async deleteProject(projectId: number) {
+
+      await this.projectRepository.delete(projectId);
+      return "Project has been deleted!";
+  }
 }
