@@ -25,7 +25,13 @@ export class UsersService {
       },
     });
   }
-
+  async findUsersByEmail(emailAddress: string) {
+    return this.usersRepository.find({
+      where: {
+        emailAddress,
+      },
+    });
+  }
   async create(request: Omit<User, 'id'>) {
     const newUser = this.usersRepository.create({
       emailAddress: request.emailAddress,
