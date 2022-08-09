@@ -25,15 +25,6 @@ export class UsersService {
       },
     });
   }
-  async findUsersByEmail(emailAddress: string) {
-    return this.usersRepository.find({
-      // want to add in contidution where the email address 
-      //match the string not to sure how to do this yet.
-      where: {
-        emailAddress,
-      },
-    });
-  }
   async create(request: Omit<User, 'id'>) {
     const newUser = this.usersRepository.create({
       emailAddress: request.emailAddress,
