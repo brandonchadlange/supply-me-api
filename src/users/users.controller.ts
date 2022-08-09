@@ -5,8 +5,10 @@ import {
   HttpStatus,
   Post,
 } from '@nestjs/common';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 import { HashService } from 'src/hash/hash.service';
 import { CreateRequest } from './dto/create.request';
+import { UserRegisteredEvent } from './events/user-registered.event';
 import { UsersService } from './users.service';
 
 @Controller('users')
@@ -14,6 +16,7 @@ export class UsersController {
   constructor(
     private readonly usersService: UsersService,
     private readonly hashService: HashService,
+    private eventEmitter: EventEmitter2,
   ) {}
 
   @Post('register')
@@ -29,11 +32,14 @@ export class UsersController {
 
     const passwordHash = await this.hashService.createHash(request.password);
 
-    await this.usersService.create({
+    const user = await this.usersService.create({
       emailAddress: request.username,
       passwordHash,
     });
 
-    // TODO: send email confirmation (user registered event)
+    this.eventEmitter.emit(
+      'user.registered',
+      new UserRegisteredEvent(user.emailAddress),
+    );
   }
 }
