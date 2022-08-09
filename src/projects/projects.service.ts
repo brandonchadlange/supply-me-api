@@ -45,4 +45,12 @@ export class ProjectsService {
 
     return project;
   }
+
+  async deleteProject(projectId: number) {
+    const project = await this.projectRepository.delete(projectId);
+    if((await project).affected == 0)
+        return false;
+      else
+        return true;
+  }
 }
