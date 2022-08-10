@@ -46,8 +46,7 @@ export class EmailService {
       to: event.emailAddress,
       from: 'brandonlostboy@gmail.com',
       subject: 'Confirm your email',
-      text: 'and easy to do anywhere, even with Node.js',
-      html: '<strong>and easy to do anywhere, even with Node.js</strong>',
+      html: `<h1>Here is your OTP</h1><p>${event.otp}</p>`,
     };
 
     const mailResponse = await this.send(msg);
