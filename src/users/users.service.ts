@@ -25,7 +25,6 @@ export class UsersService {
       },
     });
   }
-
   async create(request: Omit<User, 'id'>) {
     const newUser = this.usersRepository.create({
       emailAddress: request.emailAddress,

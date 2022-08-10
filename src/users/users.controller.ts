@@ -4,6 +4,8 @@ import {
   HttpException,
   HttpStatus,
   Post,
+  Get,
+  Param
 } from '@nestjs/common';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { HashService } from 'src/hash/hash.service';
@@ -42,4 +44,9 @@ export class UsersController {
       new UserRegisteredEvent(user.emailAddress),
     );
   }
+  @Get('/findUsersByEmail/:userEmail')
+  async findUsersByEmail(@Param() params) {
+        return await this.usersService.findOne(params.userEmail);
+  }
+
 }
