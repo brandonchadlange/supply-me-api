@@ -10,4 +10,9 @@ export class User {
 
   @Column()
   passwordHash: string;
+
+  @Column({
+    default: false,
+  })
+  emailConfirmed: boolean;
 }

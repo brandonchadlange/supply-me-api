@@ -25,7 +25,8 @@ export class UsersService {
       },
     });
   }
-  async create(request: Omit<User, 'id'>) {
+
+  async create(request: Omit<User, 'id' | 'emailConfirmed'>) {
     const newUser = this.usersRepository.create({
       emailAddress: request.emailAddress,
       passwordHash: request.passwordHash,
@@ -34,5 +35,9 @@ export class UsersService {
     await this.usersRepository.save(newUser);
 
     return newUser;
+  }
+
+  async update(user: User) {
+    return await this.usersRepository.update(user.id, user);
   }
 }
