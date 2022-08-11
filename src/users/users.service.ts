@@ -15,6 +15,9 @@ export class UsersService {
       where: {
         id,
       },
+      relations: {
+        defaultProject: true,
+      },
     });
   }
 

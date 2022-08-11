@@ -30,6 +30,7 @@ export class OnboardingController {
 
     user.firstName = onboardingDTO.firstName;
     user.lastName = onboardingDTO.lastName;
+    user.defaultProject = defaultProject;
     user.onboardingComplete = true;
 
     await this.usersService.update(user);

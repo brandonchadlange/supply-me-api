@@ -7,8 +7,11 @@ import {
   Post,
   Param,
   Query,
+  Request,
+  UseGuards,
 } from '@nestjs/common';
 import { EventEmitter2 } from '@nestjs/event-emitter';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { HashService } from 'src/hash/hash.service';
 import { CreateRequest } from './dto/create.request';
 import { EmailConfirmationService } from './email-confirmation.service';
@@ -23,6 +26,14 @@ export class UsersController {
     private readonly hashService: HashService,
     private eventEmitter: EventEmitter2,
   ) {}
+
+  @UseGuards(JwtAuthGuard)
+  @Get('profile')
+  async getUserProfile(@Request() request) {
+    const userId = request.user.userId;
+    const user = await this.usersService.findById(userId);
+    return user;
+  }
 
   @Post('register')
   async register(@Body() request: CreateRequest) {
@@ -84,6 +95,7 @@ export class UsersController {
     await this.usersService.update(user);
     await this.emailConfirmationService.delete(id);
   }
+
   @Get('/findUsersByEmail/:userEmail')
   async findUsersByEmail(@Param() params) {
     return await this.usersService.findOne(params.userEmail);
