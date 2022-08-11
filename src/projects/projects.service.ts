@@ -28,6 +28,22 @@ export class ProjectsService {
     return userProjects.map((userProject) => userProject.project);
   }
 
+  async getUserProjectBySlug(user: User, slug: string) {
+    const userProject = await this.projectUserRepository.findOne({
+      where: {
+        user,
+        project: {
+          slug,
+        },
+      },
+      relations: {
+        project: true,
+      },
+    });
+
+    return userProject.project;
+  }
+
   async createProject(name: string, slug: string, user: User) {
     const project = this.projectRepository.create({
       name: name,

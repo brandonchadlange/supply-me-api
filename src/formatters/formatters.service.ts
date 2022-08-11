@@ -13,4 +13,8 @@ export class FormattersService {
       .replace(/[^\w\-]+/g, '')
       .replace(/\-\-+/g, '-');
   }
+
+  domainFromURL(url: string) {
+    return new URL(url).hostname.replace('www.', '');
+  }
 }
