@@ -9,6 +9,7 @@ import { ProjectsModule } from './projects/projects.module';
 import { EmailModule } from './email/email.module';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { FormattersModule } from './formatters/formatters.module';
+import { OnboardingModule } from './onboarding/onboarding.module';
 
 import CONFIG_MODULE from './config/dotenv';
 import DB_MODULE from './config/typeorm';
@@ -25,6 +26,7 @@ import DB_MODULE from './config/typeorm';
     ProjectsModule,
     EmailModule,
     FormattersModule,
+    OnboardingModule,
   ],
   controllers: [AppController],
   providers: [AppService],
