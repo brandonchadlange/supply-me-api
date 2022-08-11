@@ -47,10 +47,7 @@ export class ProjectsService {
   }
 
   async deleteProject(projectId: number) {
-    const project = await this.projectRepository.delete(projectId);
-    if((await project).affected == 0)
-        return false;
-      else
-        return true;
+    const deleted = await this.projectRepository.delete(projectId);
+    return deleted.affected === 1;
   }
 }

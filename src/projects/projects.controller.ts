@@ -45,9 +45,9 @@ export class ProjectsController {
     return project;
   }
 
-  // @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @Delete(':id')
   async deleteProject(@Param() params) {
-   return await this.projectsService.deleteProject(params.id);
+    return await this.projectsService.deleteProject(params.id);
   }
 }

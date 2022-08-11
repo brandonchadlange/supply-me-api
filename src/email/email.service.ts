@@ -10,6 +10,13 @@ interface MailMessage {
   html: string;
 }
 
+interface TemplateMailMessage {
+  to: string;
+  from: string;
+  subject: string;
+  templateData: object;
+}
+
 @Injectable()
 export class EmailService {
   private canSend: boolean = false;
@@ -40,16 +47,46 @@ export class EmailService {
     return retval;
   }
 
+  private async sendTemplate(templateId: string, message: TemplateMailMessage) {
+    const retval = {
+      success: true,
+    };
+
+    if (!this.canSend) {
+      console.log('Mock send mail!');
+      return retval;
+    }
+
+    try {
+      const mailResponse = await sgMail.send({
+        templateId,
+        from: message.from,
+        to: message.to,
+        subject: message.subject,
+        dynamicTemplateData: message.templateData,
+      });
+    } catch (err) {
+      retval.success = false;
+    }
+
+    return retval;
+  }
+
   @OnEvent('user.registered')
   async sendPasswordConfirmationMail(event: UserRegisteredEvent) {
-    const msg = {
+    const msg: TemplateMailMessage = {
       to: event.emailAddress,
       from: 'brandonlostboy@gmail.com',
       subject: 'Confirm your email',
-      html: `<h1>Here is your OTP</h1><p>${event.otp}</p>`,
+      templateData: {
+        otp: event.otp,
+      },
     };
 
-    const mailResponse = await this.send(msg);
+    const mailResponse = await this.sendTemplate(
+      'd-0d4643bf5c3d4a50b42953f47b3c75ae',
+      msg,
+    );
 
     if (!mailResponse.success) {
       console.error(
