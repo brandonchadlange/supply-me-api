@@ -8,5 +8,6 @@ import { UsersModule } from 'src/users/users.module';
   imports: [repositories.PROJECT, repositories.PROJECT_USER, UsersModule],
   providers: [ProjectsService],
   controllers: [ProjectsController],
+  exports: [ProjectsService],
 })
 export class ProjectsModule {}

@@ -4,6 +4,7 @@ import { UsersController } from './users.controller';
 import repositories from '../repositories';
 import { HashModule } from 'src/hash/hash.module';
 import { EmailConfirmationService } from './email-confirmation.service';
+import { ProjectsModule } from 'src/projects/projects.module';
 
 @Module({
   imports: [repositories.USER, repositories.EMAIL_CONFIRMATION, HashModule],

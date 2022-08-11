@@ -12,7 +12,22 @@ export class User {
   passwordHash: string;
 
   @Column({
+    default: '',
+  })
+  firstName: string;
+
+  @Column({
+    default: '',
+  })
+  lastName: string;
+
+  @Column({
     default: false,
   })
   emailConfirmed: boolean;
+
+  @Column({
+    default: false,
+  })
+  onboardingComplete: boolean;
 }
