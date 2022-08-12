@@ -4,12 +4,12 @@ import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { HashModule } from './hash/hash.module';
-import { SuppliersModule } from './suppliers/suppliers.module';
 import { ProjectsModule } from './projects/projects.module';
 import { EmailModule } from './email/email.module';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { FormattersModule } from './formatters/formatters.module';
 import { OnboardingModule } from './onboarding/onboarding.module';
+import { ProductsModule } from './products/products.module';
 
 import CONFIG_MODULE from './config/dotenv';
 import DB_MODULE from './config/typeorm';
@@ -22,11 +22,11 @@ import DB_MODULE from './config/typeorm';
     UsersModule,
     AuthModule,
     HashModule,
-    SuppliersModule,
     ProjectsModule,
     EmailModule,
     FormattersModule,
     OnboardingModule,
+    ProductsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
