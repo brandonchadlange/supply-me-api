@@ -2,7 +2,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ProjectUser } from 'src/projects/entities/project-user.entity';
 import { Project } from 'src/projects/entities/project.entity';
 import { ProjectSupplierProduct } from 'src/products/entities/project-supplier-product.entity';
-import { SupplierProduct } from 'src/products/entities/supplier-product.entity';
+import { Product } from 'src/products/entities/product.entity';
 import { EmailConfirmation } from 'src/users/entities/email-confirmation.entity';
 import { User } from 'src/users/entities/user.entity';
 
@@ -21,7 +21,7 @@ const DB_MODULE = TypeOrmModule.forRoot({
   entities: [
     User,
     EmailConfirmation,
-    SupplierProduct,
+    Product,
     Project,
     ProjectUser,
     ProjectSupplierProduct,

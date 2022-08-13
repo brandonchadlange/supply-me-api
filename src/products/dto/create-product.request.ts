@@ -10,6 +10,7 @@ export class CreateProductRequest {
 // A tag and variant can be used interchangeably if a new variant is required
 // (e.g the manufacturer introuduces a wired variant of the headphones then the wireless tag can be removed and a wired variant can be added)
 // TODO CREATE INVISIBLE TAGS FROM DESCRIPTION
+// TODO CREATE Variants against a product
 
 interface Supplier {
   name: string;
@@ -204,6 +205,8 @@ function find(search: string) {
 // milk -> clover, douglasdale, pnp, woolworths, spar
 // coffee -> tribeca
 // cakes -> aunty june, aunty may, pnp, woolworths
+
+// milk - clover;
 
 // lizanne orders milk but clover is out of stock
 // how can we then get the second best milk?

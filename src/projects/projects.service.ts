@@ -15,6 +15,14 @@ export class ProjectsService {
     private projectUserRepository: Repository<ProjectUser>,
   ) {}
 
+  async findOneById(id: number) {
+    return await this.projectRepository.findOne({
+      where: {
+        id,
+      },
+    });
+  }
+
   async getUserProjects(user: User) {
     const userProjects = await this.projectUserRepository.find({
       where: {
