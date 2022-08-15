@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { OnEvent } from '@nestjs/event-emitter';
 import * as sgMail from '@sendgrid/mail';
-import { UserRegisteredEvent } from 'src/users/events/user-registered.event';
 
 interface MailMessage {
   to: string;
@@ -72,26 +71,26 @@ export class EmailService {
     return retval;
   }
 
-  @OnEvent('user.registered')
-  async sendPasswordConfirmationMail(event: UserRegisteredEvent) {
-    const msg: TemplateMailMessage = {
-      to: event.emailAddress,
-      from: 'brandonlostboy@gmail.com',
-      subject: 'Confirm your email',
-      templateData: {
-        otp: event.otp,
-      },
-    };
+  // @OnEvent('user.registered')
+  // async sendPasswordConfirmationMail(event: UserRegisteredEvent) {
+  //   const msg: TemplateMailMessage = {
+  //     to: event.emailAddress,
+  //     from: 'brandonlostboy@gmail.com',
+  //     subject: 'Confirm your email',
+  //     templateData: {
+  //       otp: event.otp,
+  //     },
+  //   };
 
-    const mailResponse = await this.sendTemplate(
-      'd-0d4643bf5c3d4a50b42953f47b3c75ae',
-      msg,
-    );
+  //   const mailResponse = await this.sendTemplate(
+  //     'd-0d4643bf5c3d4a50b42953f47b3c75ae',
+  //     msg,
+  //   );
 
-    if (!mailResponse.success) {
-      console.error(
-        'There was an issue sending the password confirmation mail',
-      );
-    }
-  }
+  //   if (!mailResponse.success) {
+  //     console.error(
+  //       'There was an issue sending the password confirmation mail',
+  //     );
+  //   }
+  // }
 }

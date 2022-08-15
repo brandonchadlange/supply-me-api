@@ -1,4 +1,3 @@
-import { Project } from 'src/projects/entities/project.entity';
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
 
 @Entity()
@@ -31,7 +30,4 @@ export class User {
     default: false,
   })
   onboardingComplete: boolean;
-
-  @ManyToOne((type) => Project, (project) => project.id)
-  defaultProject?: Project;
 }
