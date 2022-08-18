@@ -16,7 +16,7 @@ export class SuppliersController {
 
   @UseGuards(JwtAuthGuard)
   @Get()
-  async fetch() {
+  async fetch(@Request() req) {
     return await this.suppliersService.list();
   }
 
@@ -26,6 +26,7 @@ export class SuppliersController {
     @Request() request,
     @Body() createSupplierDTO: CreateSupplierDTO,
   ) {
-    return await this.suppliersService.create(createSupplierDTO.name);
+    console.log(createSupplierDTO);
+    return await this.suppliersService.create(createSupplierDTO);
   }
 }

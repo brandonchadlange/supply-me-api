@@ -13,21 +13,29 @@ export class ProjectsService {
     private projectsRepository: Repository<Project>,
     @InjectRepository(ProjectUser)
     private projectUsersRepository: Repository<ProjectUser>,
-    private readonly formattersService: FormattersService
+    private readonly formattersService: FormattersService,
   ) {}
+
+  async find(id: string) {
+    return await this.projectsRepository.findOne({
+      where: {
+        id,
+      },
+    });
+  }
 
   async create(name: string, createdByUser: User) {
     const project = this.projectsRepository.create({
-        name,
-        slug: this.formattersService.slug(name)
-    })
+      name,
+      slug: this.formattersService.slug(name),
+    });
 
     await this.projectsRepository.save(project);
 
     const defaultProjectUser = await this.projectUsersRepository.create({
-        project,
-        user: createdByUser
-    })
+      project,
+      user: createdByUser,
+    });
 
     await this.projectUsersRepository.save(defaultProjectUser);
 

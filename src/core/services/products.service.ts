@@ -49,6 +49,9 @@ export class ProductsService {
       },
       relations: {
         supplier: true,
+        productVariant: {
+          product: true,
+        },
       },
     });
   }

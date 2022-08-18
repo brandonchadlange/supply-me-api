@@ -8,6 +8,8 @@ import { CoreModule } from './core/core.module';
 
 import CONFIG_MODULE from './dotenv';
 import DB_MODULE from './typeorm';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 
 @Module({
   imports: [
@@ -18,7 +20,10 @@ import DB_MODULE from './typeorm';
     AuthModule,
     HashModule,
     EmailModule,
-    FormattersModule
-  ]
+    FormattersModule,
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'client'),
+    }),
+  ],
 })
 export class AppModule {}

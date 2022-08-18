@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { UsersService } from './services/users.service';
@@ -23,6 +23,7 @@ import { ProductVariant } from './entities/product-variant';
 import { ProductVariantSupplier } from './entities/product-variant-supplier.entity';
 import { SuppliersController } from './controllers/suppliers.controller';
 import { ProductsController } from './controllers/products.controller';
+import { ProjectInjectorMiddleware } from './middleware/project-injector.middleware';
 
 @Module({
   imports: [
@@ -58,4 +59,8 @@ import { ProductsController } from './controllers/products.controller';
   ],
   exports: [UsersService],
 })
-export class CoreModule {}
+export class CoreModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(ProjectInjectorMiddleware).forRoutes('suppliers');
+  }
+}

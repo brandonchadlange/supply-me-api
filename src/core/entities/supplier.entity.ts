@@ -8,4 +8,15 @@ export class Supplier extends EntityBase {
 
   @Column()
   slug: string;
+
+  @Column({
+    default: '',
+  })
+  websiteUrl: string;
+
+  @Column()
+  contactName: string;
+
+  @Column()
+  contactEmail: string;
 }

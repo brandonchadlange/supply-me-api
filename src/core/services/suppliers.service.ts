@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { FormattersService } from 'src/formatters/formatters.service';
 import { Repository } from 'typeorm';
+import { CreateSupplierDTO } from '../dto/create-supplier.dto';
 import { Supplier } from '../entities/supplier.entity';
 
 @Injectable()
@@ -24,10 +25,12 @@ export class SuppliersService {
     });
   }
 
-  async create(name: string) {
+  async create(createSupplierDTO: CreateSupplierDTO) {
     const supplier = this.suppliersRepository.create({
-      name,
-      slug: this.formattersService.slug(name),
+      name: createSupplierDTO.name,
+      contactName: createSupplierDTO.contactName,
+      contactEmail: createSupplierDTO.contactEmail,
+      slug: this.formattersService.slug(createSupplierDTO.name),
     });
 
     await this.suppliersRepository.save(supplier);
