@@ -1,10 +1,9 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
+import { EntityBase } from 'src/base/entity';
+import { Entity, Column, ManyToOne } from 'typeorm';
+import { Project } from './project.entity';
 
 @Entity()
-export class User {
-  @PrimaryGeneratedColumn()
-  id: number;
-
+export class User extends EntityBase {
   @Column()
   emailAddress: string;
 
@@ -30,4 +29,7 @@ export class User {
     default: false,
   })
   onboardingComplete: boolean;
+
+  @ManyToOne((type) => Project, (project) => project.id)
+  defaultProject?: Project;
 }

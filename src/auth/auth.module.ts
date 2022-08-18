@@ -6,9 +6,10 @@ import { AuthController } from './auth.controller';
 import { HashModule } from 'src/hash/hash.module';
 import JWT_MODULE from './jwt.module';
 import { JwtStrategy } from './jwt.strategy';
+import { CoreModule } from 'src/core/core.module';
 
 @Module({
-  imports: [PassportModule, HashModule, JWT_MODULE],
+  imports: [PassportModule, CoreModule, HashModule, JWT_MODULE],
   providers: [AuthService, LocalStrategy, JwtStrategy],
   controllers: [AuthController],
 })
