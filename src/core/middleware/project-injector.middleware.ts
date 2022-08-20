@@ -10,7 +10,7 @@ export class ProjectInjectorMiddleware implements NestMiddleware {
     const projectIdHeader = req.headers['x-projectid'];
 
     if (!projectIdHeader) {
-      console.log('project header not present on route: ' + req.originalUrl);
+      // console.log('project header not present on route: ' + req.originalUrl);
       return next();
     }
 
