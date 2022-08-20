@@ -1,6 +1,7 @@
-import { Body, Controller, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { QuoteRequestDTO } from '../dto/quote-request.dto';
 import { ProductVariantSupplier } from '../entities/product-variant-supplier.entity';
 import { QuoteRequestCreatedEvent } from '../events/quote-request-created.event';
 import { ProductsService } from '../services/products.service';
@@ -19,12 +20,18 @@ export class QuoteRequestsController {
   ) {}
 
   @UseGuards(JwtAuthGuard)
-  @Post()
-  async create(@Body() productSupplierVariants: string[]) {
-    const productVariantSuppliers: ProductVariantSupplier[] = [];
-    const quoteRequest = await this.quoteRequestsService.create();
+  @Get()
+  async list() {
+    return await this.quoteRequestsService.list()
+  }
 
-    for await (const productSupplierVariantId of productSupplierVariants) {
+  @UseGuards(JwtAuthGuard)
+  @Post()
+  async create(@Body() quoteRequestDTO: QuoteRequestDTO) {
+    const productVariantSuppliers: ProductVariantSupplier[] = [];
+    const quoteRequest = await this.quoteRequestsService.create(quoteRequestDTO.reference);
+
+    for await (const productSupplierVariantId of quoteRequestDTO.productSupplierVariants) {
       const productVariantSupplier =
         await this.productsService.findSupplierVariant(
           productSupplierVariantId,
@@ -48,6 +55,14 @@ export class QuoteRequestsController {
       (e) => e.productVariant.product,
     );
 
+    const uniqueProducts = [];
+
+    products.forEach(product => {
+      if(!uniqueProducts.includes(product.id)) {
+        uniqueProducts.push(product.id);
+      }
+    })
+
     const suppliers = productVariantSuppliers.map((e) => e.supplier);
     const supplierMap = suppliers.map((e) => e.id);
     const uniqueSuppliers = [];
@@ -61,6 +76,10 @@ export class QuoteRequestsController {
     const suppliersFull = uniqueSuppliers.map((e) =>
       suppliers.find((s) => s.id === e),
     );
+
+    quoteRequest.uniqueProducts = uniqueProducts.length;
+    quoteRequest.uniqueSuppliers = uniqueSuppliers.length;
+    await this.quoteRequestsService.update(quoteRequest);
 
     this.eventEmitter.emit(
       'quote-request.created',

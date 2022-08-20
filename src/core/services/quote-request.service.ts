@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { QuoteResponse } from '../dto/quote/quote.response';
 import { ProductVariantSupplier } from '../entities/product-variant-supplier.entity';
 import { QuoteRequestSupplierVariant } from '../entities/quote-request-supplier-variant.entity';
 import { QuoteRequestSupplier } from '../entities/quote-request-supplier.entity';
@@ -18,10 +19,21 @@ export class QuoteRequestsService {
     private quoteRequestSupplierVariantRepository: Repository<QuoteRequestSupplierVariant>,
   ) {}
 
-  async create() {
-    const quoteRequest = await this.quoteRequestRepository.create();
+  async list() {
+    const quotes = await this.quoteRequestRepository.find();
+    return quotes.map(quote => new QuoteResponse(quote)) 
+  }
+
+  async create(reference: string) {
+    const quoteRequest = await this.quoteRequestRepository.create({
+      reference
+    });
     await this.quoteRequestRepository.save(quoteRequest);
     return quoteRequest;
+  }
+
+  async update(quoteRequest: QuoteRequest) {
+    await this.quoteRequestRepository.update(quoteRequest.id, quoteRequest);
   }
 
   async createQuoteSupplier(quoteRequest: QuoteRequest, supplier: Supplier) {
